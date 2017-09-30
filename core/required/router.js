@@ -299,7 +299,8 @@ module.exports = (() => {
         route: routeData.route,
         remoteAddress: this.parseRemoteAddress(routeData.headers['x-forwarded-for'] || routeData.remoteAddress),
         remoteAddressList: this.parseRemoteAddress(routeData.headers['x-forwarded-for'] || routeData.remoteAddress, true),
-        id: routeData.route.id
+        id: routeData.route.id,
+        url: routeData.url
       };
 
       let d = domain.create();

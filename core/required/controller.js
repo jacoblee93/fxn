@@ -56,7 +56,7 @@ module.exports = (() => {
       this.middleware.exec(this, (err) => {
 
         if (err) {
-          return this.statusError(err.statusCode || 500, err.message);
+          return this.httpError(err.statusCode || 500, err.message);
         }
 
         this[this.convertMethod(this._method, this.params.id)]();
@@ -234,7 +234,7 @@ module.exports = (() => {
     * @param {string} msg Response message to send
     * @return {boolean}
     */
-    statusError(code, msg) {
+    httpError(code, msg) {
       this.status(code);
       this.render(msg);
       return true;

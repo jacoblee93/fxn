@@ -6,6 +6,18 @@ module.exports = fxn => {
 
   describe('Controller', () => {
 
+    class StatusCodeForbiddenMiddleware {
+
+      constructor() {}
+
+      exec(controller, callback) {
+        let error = new Error('Test error')
+        error.statusCode = 403;
+        return callback(error);
+      }
+
+    }
+
     const c = new fxn.Controller('/abc/def', 'GET');
     const d = new fxn.Controller('')
 
@@ -53,6 +65,15 @@ module.exports = fxn => {
       expect(c.convertMethod('POST', '1')).to.equal('post');
       expect(c.convertMethod('DELETE', '1')).to.equal('destroy');
       expect(c.convertMethod('OPTIONS', '1')).to.equal('options');
+
+    });
+
+    it('should set the proper status code for updated middleware', () => {
+
+      c.middleware.use(StatusCodeForbiddenMiddleware);
+      c.run();
+
+      expect(c.getStatus()).to.equal(403);
 
     });
 

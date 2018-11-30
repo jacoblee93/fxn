@@ -56,7 +56,7 @@ module.exports = (() => {
       this.middleware.exec(this, (err) => {
 
         if (err) {
-          return this.error(err.message);
+          return this.statusError(err.statusCode || 500, err.message);
         }
 
         this[this.convertMethod(this._method, this.params.id)]();
@@ -215,6 +215,29 @@ module.exports = (() => {
     */
     getStatus() {
       return this._status;
+    }
+
+    /**
+    * Using API formatting, send an http.ServerResponse indicating there was an Internal Server Error (500)
+    * @param {string} msg Error message to send
+    * @return {boolean}
+    */
+    error(msg) {
+      this.status(500);
+      this.render(msg || 'Internal Server Error');
+      return true;
+    }
+
+    /**
+    * Using API formatting, send a http.ServerResponse error with a specific HTTP response status code
+    * @param {Number} code HTTP response status code
+    * @param {string} msg Response message to send
+    * @return {boolean}
+    */
+    statusError(code, msg) {
+      this.status(code);
+      this.render(msg);
+      return true;
     }
 
     /**

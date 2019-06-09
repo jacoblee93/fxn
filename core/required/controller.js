@@ -117,7 +117,8 @@ module.exports = (() => {
     */
     options() {
       this.status(200);
-      this.render();
+      this.setHeader('Content-Type', 'text/plain');
+      this.render('200 OK');
     }
 
     index() { this.get(); }

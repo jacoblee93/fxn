@@ -113,6 +113,34 @@ module.exports = fxn => {
 
     });
 
+    it('Should dispatch routes', (done) => {
+
+      router.dispatch(router.prepare('::1', '/abc/123', 'GET', {}, ''), (err, status, headers, data) => {
+        try {
+          expect(err).to.not.exist;
+          expect(status).to.equal(501);
+          return done();
+        } catch (e) {
+          return done(e);
+        }
+      });
+
+    });
+
+    it('Should dispatch routes if an IP address is not passed in', (done) => {
+
+      router.dispatch(router.prepare(null, '/abc/123', 'GET', {}, ''), (err, status, headers, data) => {
+        try {
+          expect(err).to.not.exist;
+          expect(status).to.equal(501);
+          return done();
+        } catch (e) {
+          return done(e);
+        }
+      });
+
+    });
+
   });
 
 };

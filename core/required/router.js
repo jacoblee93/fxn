@@ -298,8 +298,8 @@ module.exports = (() => {
         auth: this.parseAuth(url.parse(routeData.url, true).query, routeData.headers),
         matches: routeData.matches,
         route: routeData.route,
-        remoteAddress: this.parseRemoteAddress(routeData.headers['x-forwarded-for'] || routeData.remoteAddress),
-        remoteAddressList: this.parseRemoteAddress(routeData.headers['x-forwarded-for'] || routeData.remoteAddress, true),
+        remoteAddress: this.parseRemoteAddress(routeData.headers['x-forwarded-for'] || routeData.remoteAddress || ''),
+        remoteAddressList: this.parseRemoteAddress(routeData.headers['x-forwarded-for'] || routeData.remoteAddress || '', true),
         id: routeData.route.id
       };
 
